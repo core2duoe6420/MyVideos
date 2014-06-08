@@ -1,0 +1,465 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/index.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.js"></script>
+	<script type="text/javascript" src="../js/fixed_top_message.js"></script>
+    <title>视频管理系统</title>
+</head>
+<body>
+	<div class="fixed-bar">
+		<nav class="navbar navbar-inverse" role="navigation">
+	  		<div class="navbar-header">
+	    		<a class="navbar-brand">视频管理系统</a>
+	  		</div>
+
+	  		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	    		<ul class="nav navbar-nav">
+	    			<li class="dropdown">
+        				<a class="dropdown-toggle" data-toggle="dropdown" onclick="$('#movie-table-div').show().siblings().hide()">电影 <b class="caret"></b></a>
+        				<ul class="dropdown-menu">
+          					<li><a onclick="$('#add-new-movie').show()">添加新电影</a></li>
+					    </ul>
+					 </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" onclick="$('#collection-table-div').show().siblings().hide()">系列 <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a onclick="$('#add-new-collection').show()">添加新系列</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" onclick="$('#tvseries-table-div').show().siblings().hide()">电视剧 <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a onclick="$('#add-new-tvseries').show()">添加新电视剧</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" onclick="$('#manage-div').show().siblings().hide()">管理 <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a onclick="$('#add-new-group').show()">添加新小组</a></li>
+                            <li><a onclick="$('#add-new-storage').show()">添加新存储</a></li>
+                            <li><a onclick="$('#add-new-resolution').show()">添加新规格</a></li>
+                        </ul>
+                    </li>
+	    		</ul>
+	  		</div>
+		</nav>
+	</div>
+	<div>
+        <div id="movie-table-div">
+            <table id="movie-table" class="table">
+                <thead>
+                <tr>
+                    <th style="display: none">ID</th>
+                    <th style="width:250px;">中文名</th>
+                    <th style="">英文名</th>
+                    <th style="width:100px">规格</th>
+                    <th style="width:120px">小组</th>
+                    <th style="width:100px">位置</th>
+                    <th style="width:150px">添加时间</th>
+                    <th style="width:100px">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="display: none"></td>
+                    <td><input id="movie-filter-chinese-name" type="text" class="form-control" placeholder="中文名" oninput="filterVideo('movie');"/></td>
+                    <td><input id="movie-filter-english-name" type="text" class="form-control" placeholder="英文名" oninput="filterVideo('movie');"/></td>
+                    <td>
+                        <select id="movie-filter-resolution" onchange="filterVideo('movie');" class="form-control">
+                        </select>
+                    </td>
+                    <td>
+                        <select id="movie-filter-group" onchange="filterVideo('movie');" class="form-control">
+                        </select>
+                    </td>
+                    <td>
+                        <select id="movie-filter-storage" onchange="filterVideo('movie');" class="form-control">
+                        </select>
+                    </td>
+                    <td><input id="movie-filter-time" type="text" class="form-control" placeholder="添加时间" oninput="filterVideo('movie');"/></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="table-menu">
+                <span>共<span id="movie-total"></span>条 当前
+                    <span id="movie-start"></span>-
+                    <span id="movie-end"></span>条 </span>
+                <ul id="movie-menu" class="pagination">
+
+                </ul>
+            </div>
+        </div>
+        <div id="collection-table-div">
+            <table id="collection-table" class="table">
+                <thead>
+                <tr>
+                    <th style="display: none">ID</th>
+                    <th style="width:250px">中文名</th>
+                    <th style="">英文名</th>
+                    <th style="width:80px">部数</th>
+                    <th style="width:100px">规格</th>
+                    <th style="width:120px">小组</th>
+                    <th style="width:100px">位置</th>
+                    <th style="width:150px">添加时间</th>
+                    <th style="width:100px">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="display: none"></td>
+                    <td><input id="collection-filter-chinese-name" type="text" class="form-control" placeholder="中文名" oninput="filterVideo('collection');"/></td>
+                    <td><input id="collection-filter-english-name" type="text" class="form-control" placeholder="英文名" oninput="filterVideo('collection');"/></td>
+                    <td><input id="collection-filter-count" type="text" class="form-control" placeholder="部数" oninput="filterVideo('collection');"/></td>
+                    <td>
+                        <select id="collection-filter-resolution" onchange="filterVideo('collection');" class="form-control">
+                        </select>
+                    </td>
+                    <td>
+                        <select id="collection-filter-group" onchange="filterVideo('collection');" class="form-control">
+                        </select>
+                    </td>
+                    <td>
+                        <select id="collection-filter-storage" onchange="filterVideo('collection');" class="form-control">
+                        </select>
+                    </td>
+                    <td><input id="collection-filter-time" type="text" class="form-control" placeholder="添加时间" oninput="filterVideo('collection');"/></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="table-menu">
+                <span>共<span id="collection-total"></span>条 当前
+                    <span id="collection-start"></span>-
+                    <span id="collection-end"></span>条 </span>
+                <ul id="collection-menu" class="pagination">
+
+                </ul>
+            </div>
+        </div>
+        <div id="tvseries-table-div">
+            <table id="tvseries-table" class="table">
+                <thead>
+                <tr>
+                    <th style="display: none">ID</th>
+                    <th style="width: 250px">中文名</th>
+                    <th style="">英文名</th>
+                    <th style="width:140px">季数</th>
+                    <th style="width:100px">规格</th>
+                    <th style="width:120px">小组</th>
+                    <th style="width:100px">位置</th>
+                    <th style="width:150px">添加时间</th>
+                    <th style="width:100px">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="display: none"></td>
+                    <td><input id="tvseries-filter-chinese-name" type="text" class="form-control" placeholder="中文名" oninput="filterVideo('tvseries');"/></td>
+                    <td><input id="tvseries-filter-english-name" type="text" class="form-control" placeholder="英文名" oninput="filterVideo('tvseries');"/></td>
+                    <td><input id="tvseries-filter-season" type="text" class="form-control" placeholder="季数" oninput="filterVideo('tvseries');"/></td>
+                    <td>
+                        <select id="tvseries-filter-resolution" onchange="filterVideo('tvseries');" class="form-control">
+                        </select>
+                    </td>
+                    <td>
+                        <select id="tvseries-filter-group" onchange="filterVideo('tvseries');" class="form-control">
+                        </select>
+                    </td>
+                    <td>
+                        <select id="tvseries-filter-storage" onchange="filterVideo('tvseries');" class="form-control">
+                        </select>
+                    </td>
+                    <td><input id="tvseries-filter-time" type="text" class="form-control" placeholder="添加时间" oninput="filterVideo('tvseries');"/></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="table-menu">
+                <span>共<span id="tvseries-total"></span>条 当前
+                    <span id="tvseries-start"></span>-
+                    <span id="tvseries-end"></span>条 </span>
+                <ul id="tvseries-menu" class="pagination">
+
+                </ul>
+            </div>
+        </div>
+        <div id="manage-div">
+            <div id="group-table-div">
+                <table id="group-table" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th style="width:70px">编号</th>
+                        <th style="">小组名</th>
+                        <th style="width:90px">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input id="group-filter-id" type="text" class="form-control" placeholder="编号" oninput="filterRecord('group')"/></td>
+                        <td><input id="group-filter-name" type="text" class="form-control" placeholder="小组名" oninput="filterRecord('group')"/></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="resolution-table-div">
+                <table id="resolution-table" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th style="width:70px">编号</th>
+                        <th style="">规格名</th>
+                        <th style="width:90px">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input id="resolution-filter-id" type="text" class="form-control" placeholder="编号" oninput="filterRecord('resolution')"/></td>
+                        <td><input id="resolution-filter-name" type="text" class="form-control" placeholder="规格名" oninput="filterRecord('resolution')"/></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="storage-table-div">
+                <table id="storage-table" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th style="width:70px">编号</th>
+                        <th style="">存储名</th>
+                        <th style="width:90px">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input id="storage-filter-id" type="text" class="form-control" placeholder="编号" oninput="filterRecord('storage')"/></td>
+                        <td><input id="storage-filter-name" type="text" class="form-control" placeholder="存储名" oninput="filterRecord('storage')"/></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+	</div>
+	<div id="add-new-movie" class="float-block">
+		<div class="add-new-movie-div">
+			<div class="alert alert-info text-center">添加新电影</div>
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+			    	<label for="new-movie-chinese-name" class="col-sm-3 control-label">中文名</label>
+			    	<div class="col-sm-10">
+			    		<input type="text" class="form-control" id="new-movie-chinese-name" placeholder="中文名">
+			    	</div>
+			  	</div>
+			  	<div class="form-group">
+			    	<label for="new-movie-english-name" class="col-sm-3 control-label">英文名</label>
+			    	<div class="col-sm-10">
+			    		<input type="text" class="form-control" id="new-movie-english-name" placeholder="英文名">
+			    	</div>
+			  	</div>
+
+			  	<div class="form-group">
+			    	<label for="new-movie-resolution" class="col-sm-3 control-label">规格</label>
+			    	<div class="col-sm-10">
+                        <select id="new-movie-resolution" class="form-control">
+                        </select>
+			    	</div>
+			  	</div>
+			  	<div class="form-group">
+			    	<label for="new-movie-group" class="col-sm-3 control-label">小组</label>
+			    	<div class="col-sm-10">
+                        <select id="new-movie-group" class="form-control">
+                        </select>
+			    	</div>
+			  	</div>
+			  	<div class="form-group">
+			    	<label for="new-movie-storage" class="col-sm-3 control-label">存储</label>
+			    	<div class="col-sm-10">
+                        <select id="new-movie-storage" class="form-control">
+                        </select>
+			    	</div>
+			  	</div>
+			  	<div class="text-center">
+			  		<button type="button" class="btn btn-primary" onclick="submitNewVideo('movie');">添加</button>
+			  		<button type="button" class="btn btn-primary" onclick="$('.float-block').hide();">关闭</button>
+			  	</div>
+			</form>
+		</div>
+	</div>
+    <div id="add-new-collection" class="float-block">
+        <div class="add-new-collection-div">
+            <div class="alert alert-info text-center">添加新系列</div>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="new-collection-chinese-name" class="col-sm-3 control-label">中文名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="new-collection-chinese-name" placeholder="中文名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="new-collection-english-name" class="col-sm-3 control-label">英文名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="new-collection-english-name" placeholder="英文名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="new-collection-english-name" class="col-sm-3 control-label">部数</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="new-collection-count" placeholder="部数">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="new-collection-resolution" class="col-sm-3 control-label">规格</label>
+                    <div class="col-sm-10">
+                        <select id="new-collection-resolution" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="new-collection-group" class="col-sm-3 control-label">小组</label>
+                    <div class="col-sm-10">
+                        <select id="new-collection-group" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="new-collection-storage" class="col-sm-3 control-label">存储</label>
+                    <div class="col-sm-10">
+                        <select id="new-collection-storage" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" onclick="submitNewVideo('collection');">添加</button>
+                    <button type="button" class="btn btn-primary" onclick="$('.float-block').hide();">关闭</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="add-new-tvseries" class="float-block">
+        <div class="add-new-collection-div">
+            <div class="alert alert-info text-center">添加新电视剧</div>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="new-tvseries-chinese-name" class="col-sm-3 control-label">中文名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="new-tvseries-chinese-name" placeholder="中文名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="new-tvseries-english-name" class="col-sm-3 control-label">英文名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="new-tvseries-english-name" placeholder="英文名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="new-tvseries-season" class="col-sm-3 control-label">季数</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="new-tvseries-season" placeholder="季数">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="new-tvseries-resolution" class="col-sm-3 control-label">规格</label>
+                    <div class="col-sm-10">
+                        <select id="new-tvseries-resolution" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="new-tvseries-group" class="col-sm-3 control-label">小组</label>
+                    <div class="col-sm-10">
+                        <select id="new-tvseries-group" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="new-tvseries-storage" class="col-sm-3 control-label">存储</label>
+                    <div class="col-sm-10">
+                        <select id="new-tvseries-storage" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" onclick="submitNewVideo('tvseries');">添加</button>
+                    <button type="button" class="btn btn-primary" onclick="$('.float-block').hide();">关闭</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="add-new-group" class="float-block">
+        <div class="add-new-movie-div">
+            <div class="alert alert-info text-center">添加新小组</div>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="new-group-name" class="col-sm-3 control-label">小组名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="new-group-name" placeholder="小组名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="new-group-note" class="col-sm-3 control-label">备注</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="new-group-note" placeholder="备注" row="7"></textarea>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" onclick="submitNewRecord('group')">添加</button>
+                    <button type="button" class="btn btn-primary" onclick="$('.float-block').hide();">关闭</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="add-new-resolution" class="float-block">
+        <div class="add-new-movie-div">
+            <div class="alert alert-info text-center">添加新规格</div>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="new-resolution-name" class="col-sm-3 control-label">规格名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="new-resolution-name" placeholder="规格名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="new-resolution-note" class="col-sm-3 control-label">备注</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="new-resolution-note" placeholder="备注" row="7"></textarea>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" onclick="submitNewRecord('resolution')">添加</button>
+                    <button type="button" class="btn btn-primary" onclick="$('.float-block').hide();">关闭</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="add-new-storage" class="float-block">
+        <div class="add-new-movie-div">
+            <div class="alert alert-info text-center">添加新存储</div>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="new-storage-name" class="col-sm-3 control-label">存储名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="new-storage-name" placeholder="存储名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="new-storage-note" class="col-sm-3 control-label">备注</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="new-storage-note" placeholder="备注" row="7"></textarea>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" onclick="submitNewRecord('storage')">添加</button>
+                    <button type="button" class="btn btn-primary" onclick="$('.float-block').hide();">关闭</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/index.js"></script>
+</body>
