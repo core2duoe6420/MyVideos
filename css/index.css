@@ -76,3 +76,23 @@ table tr td .form-control {
 a {
     cursor: pointer;
 }
+
+#manage-div {
+    margin: 0 auto;
+    width: 1200px;
+}
+
+.wait-block {
+     display: none;
+     position: fixed;
+     left: 0px;
+     top: 0px;
+     z-index: 2;
+     background: rgba(0,0,0,0.4);
+     width: 100%;
+     height: 100%;
+ }
+
+.wait-info {
+    text-align: center;
+}

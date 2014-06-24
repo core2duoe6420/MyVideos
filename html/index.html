@@ -47,7 +47,7 @@
 	    		</ul>
 	  		</div>
 		</nav>
-	</div>
+    </div>
 	<div>
         <div id="movie-table-div">
             <table id="movie-table" class="table">
@@ -286,7 +286,7 @@
 			    	</div>
 			  	</div>
 			  	<div class="text-center">
-			  		<button type="button" class="btn btn-primary" onclick="submitNewVideo('movie');">添加</button>
+			  		<button type="button" class="btn btn-primary" id="new-movie-submit" onclick="submitNewVideo('movie');">添加</button>
 			  		<button type="button" class="btn btn-primary" onclick="$('.float-block').hide();">关闭</button>
 			  	</div>
 			</form>
@@ -336,7 +336,7 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary" onclick="submitNewVideo('collection');">添加</button>
+                    <button type="button" class="btn btn-primary" id="new-collection-submit" onclick="submitNewVideo('collection');">添加</button>
                     <button type="button" class="btn btn-primary" onclick="$('.float-block').hide();">关闭</button>
                 </div>
             </form>
@@ -386,7 +386,7 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary" onclick="submitNewVideo('tvseries');">添加</button>
+                    <button type="button" class="btn btn-primary" id="new-tvseries-submit" onclick="submitNewVideo('tvseries');">添加</button>
                     <button type="button" class="btn btn-primary" onclick="$('.float-block').hide();">关闭</button>
                 </div>
             </form>
@@ -409,7 +409,7 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary" onclick="submitNewRecord('group')">添加</button>
+                    <button type="button" class="btn btn-primary" id="new-group-submit" onclick="submitNewRecord('group')">添加</button>
                     <button type="button" class="btn btn-primary" onclick="$('.float-block').hide();">关闭</button>
                 </div>
             </form>
@@ -432,7 +432,7 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary" onclick="submitNewRecord('resolution')">添加</button>
+                    <button type="button" class="btn btn-primary" id="new-resolution-submit" onclick="submitNewRecord('resolution')">添加</button>
                     <button type="button" class="btn btn-primary" onclick="$('.float-block').hide();">关闭</button>
                 </div>
             </form>
@@ -455,10 +455,15 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary" onclick="submitNewRecord('storage')">添加</button>
+                    <button type="button" class="btn btn-primary" id="new-storage-submit" onclick="submitNewRecord('storage')">添加</button>
                     <button type="button" class="btn btn-primary" onclick="$('.float-block').hide();">关闭</button>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="wait-block">
+        <div class="wait-info alert alert-warning">
+            正在加载数据，请稍后
         </div>
     </div>
     <script type="text/javascript" src="../js/index.js"></script>

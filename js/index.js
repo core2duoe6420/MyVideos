@@ -1,10 +1,5 @@
-var php_url = "http://192.168.157.143/php/";
+var php_url = "php/";
 var MAX_ITEM_PER_PAGE = 10;
-$.ajaxSetup({
-    headers : {
-        "Authorization": "Basic $BASE64_PAIR"
-    }
-});
 var videos = new Object();
 var pageInfo = {
     movie : {},
@@ -14,21 +9,27 @@ var pageInfo = {
 }
 $('#movie-table-div').show().siblings().hide();
 
-getRecords("storage");
-getRecords("group");
-getRecords("resolution");
-getVideos("movie");
-getVideos("collection");
-getVideos("tvseries");
+$(".wait-block").show();
+getRecords("storage", true);
+getRecords("group", true);
+getRecords("resolution", true);
+getVideos("movie", true);
+getVideos("collection", true);
+getVideos("tvseries", true);
+var loaded_blocks = 0;
 
-function getRecords(type) {
+function getRecords(type, loading) {
+    if(loading == undefined)
+        loading = false;
+
     var table_name = type == "group"?"encodegroup":type;
     var table_id = type + "-table";
 
     var table = $("#" + table_id)[0];
     for(var i = table.rows.length - 1; i >= 2; i--)
         table.deleteRow(i);
-
+    if(!loading)
+        $(".wait-block").show();
     $.ajax({
         type: "GET",
         url: php_url + "GetRecords.php",
@@ -66,6 +67,13 @@ function getRecords(type) {
                     select.appendChild(option);
                 });
             })
+            if(!loading) {
+                $(".wait-block").hide();
+            } else {
+                loaded_blocks++;
+                if(loaded_blocks >= 6)
+                    $(".wait-block").hide();
+            }
         }
     });
 }
@@ -105,6 +113,8 @@ function delRecord(type,id) {
     var yes = confirm("确实要删除 " + row.cells[1].innerHTML + " 吗？");
     if(yes == false)
         return;
+
+    $(".wait-block").show();
     var htmlobj = $.ajax({
         type: "GET",
         url: php_url + "DeleteRow.php",
@@ -114,6 +124,7 @@ function delRecord(type,id) {
         },
         async:false
     });
+    $(".wait-block").hide();
     var result = htmlobj.responseText;
     if(result == "success") {
         fixed_top_success("删除成功！");
@@ -135,6 +146,7 @@ function updateRecord(type, id) {
         fixed_top_warning("请输入名字");
         return;
     }
+    $(".wait-block").show();
     var htmlobj = $.ajax({
         type: "POST",
         url: php_url + "UpdateRecord.php",
@@ -145,6 +157,7 @@ function updateRecord(type, id) {
         },
         async:false
     });
+    $(".wait-block").hide();
     var result = htmlobj.responseText;
     if(result == "success") {
         fixed_top_success("修改成功！");
@@ -157,11 +170,14 @@ function updateRecord(type, id) {
 function submitNewRecord(type) {
     var name_id = "new-" + type + "-name";
     var note_id = "new-" + type + "-note";
+    var button_id = "new-" + type + "-submit";
     var table_name = type == "group"?"encodegroup":type;
     if($("#" + name_id).val() == "") {
         fixed_top_warning("请输入名字");
         return;
     }
+    $("#" + button_id).attr("disabled", true);
+    $(".wait-block").show();
     var htmlobj = $.ajax({
         type: "POST",
         url: php_url + "SubmitNewRecord.php",
@@ -173,6 +189,8 @@ function submitNewRecord(type) {
         async:false
     });
     var result = htmlobj.responseText;
+    $("#" + button_id).attr("disabled", false);
+    $(".wait-block").hide();
     if(result == "success") {
         fixed_top_success("添加成功！");
         $('.float-block').hide();
@@ -247,6 +265,9 @@ function submitNewVideo(type) {
         encodegroup, resolution, storage, count, season) == false)
         return;
 
+    var button_id = "new-" + type + "-submit";
+    $("#" + button_id).attr("disabled", true);
+    $(".wait-block").show();
     var htmlobj = $.ajax({
         type: "POST",
         url: php_url + "SubmitNewVideo.php",
@@ -263,6 +284,8 @@ function submitNewVideo(type) {
         async:false
     });
     var result = htmlobj.responseText;
+    $("#" + button_id).attr("disabled", false);
+    $(".wait-block").hide();
     if(result == "success") {
         fixed_top_success("添加成功！");
         $('.float-block').hide();
@@ -281,7 +304,9 @@ function submitNewVideo(type) {
     }
 }
 
-function getVideos(type) {
+function getVideos(type, loading) {
+    if(loading == undefined)
+        loading = false;
     var table_name = type
     var table_id = type + "-table";
 
@@ -289,6 +314,8 @@ function getVideos(type) {
     for(var i = table.rows.length - 1; i >= 2; i--)
         table.deleteRow(i);
 
+    if(!loading)
+        $(".wait-block").show();
     $.ajax({
         type: "GET",
         url: php_url + "GetVideos.php",
@@ -342,6 +369,13 @@ function getVideos(type) {
                 newRow.filtered = true;
             });
             setVideoMenu(type);
+            if(!loading){
+                $(".wait-block").hide();
+            } else {
+                loaded_blocks++;
+                if(loaded_blocks >= 6)
+                    $(".wait-block").hide();
+            }
         }
     });
 }
@@ -355,6 +389,7 @@ function delVideo(type, rowID) {
     var yes = confirm("确实要删除 " + row.cells[1].innerHTML + " 吗？");
     if(yes == false)
         return;
+    $(".wait-block").show();
     var htmlobj = $.ajax({
         type: "GET",
         url: php_url + "DeleteRow.php",
@@ -364,6 +399,7 @@ function delVideo(type, rowID) {
         },
         async:false
     });
+    $(".wait-block").hide();
     var result = htmlobj.responseText;
     if(result == "success") {
         fixed_top_success("删除成功！");
@@ -497,6 +533,7 @@ function updateVideo(type, rowID) {
         encodegroup, resolution, storage, count, season) == false)
         return;
 
+    $(".wait-block").show();
     var htmlobj = $.ajax({
         type: "POST",
         url: php_url + "UpdateVideo.php",
@@ -513,6 +550,7 @@ function updateVideo(type, rowID) {
         },
         async:false
     });
+    $(".wait-block").hide();
     var result = htmlobj.responseText;
     if(result == "success") {
         fixed_top_success("修改成功！");
